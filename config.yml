@@ -15,8 +15,13 @@ storage:
     enabled: true
 http:
   addr: :5000
+  host: https://sub.example.com
   headers:
     X-Content-Type-Options: [nosniff]
+auth:
+  htpasswd:
+    realm: https://sub.example.com
+    path: /etc/nginx/.htpasswd
 health:
   storagedriver:
     enabled: true

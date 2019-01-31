@@ -9,12 +9,14 @@ Taking the config file built into dockers registry image from `/etc/docker/regis
 ## Useful Links
 - https://docs.docker.com/registry/configuration/
 - https://mfojtik.io/posts/digitalocean-spaces-registry/
+- https://www.alibabacloud.com/blog/how-to-setup-docker-private-registry-on-ubuntu-16-04_594085
 
 ### Start registry
 ```bash
 docker run -d -p 5000:5000 \
   --restart=always \
   --name registry \
+  -v `pwd`/.htpasswd:/etc/nginx/.htpasswd \
   -v `pwd`/config.yml:/etc/docker/registry/config.yml \
   registry:2
 ```
@@ -27,13 +29,22 @@ docker container stop registry && docker container rm -v registry
 ## Image Management
 
 ### Tag Image for local registry
-`docker image tag ubuntu localhost:5000/ubuntu`
+`docker image tag ubuntu sub.example.com/ubuntu`
 
 ### Push image to local registry
-`docker push localhost:5000/ubuntu`
+`docker push sub.example.com/ubuntu`
 
 ### Pull image from local registry
-`docker pull localhost:5000/ubuntu`
+`docker pull sub.example.com/ubuntu`
 
 ### List images in registry
-`curl -X GET http://localhost:5000/v2/_catalog`
+`curl -X GET http://sub.example.com/v2/_catalog`
+
+## Securing registry
+
+### `// .htpasswd`
+You will be prompted to create a password:
+`htpasswd -B .htpasswd $USERNAME_FOR_REGISTRY`
+
+### login
+`docker login https://sub.example.com`

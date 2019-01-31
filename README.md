@@ -29,11 +29,11 @@ docker container stop registry && docker container rm -v registry
 ### Tag Image for local registry
 `docker image tag ubuntu localhost:5000/ubuntu`
 
-## Push image to local registry
+### Push image to local registry
 `docker push localhost:5000/ubuntu`
 
-## Pull image from local registry
+### Pull image from local registry
 `docker pull localhost:5000/ubuntu`
 
-## List images in registry
+### List images in registry
 `curl -X GET http://localhost:5000/v2/_catalog`
